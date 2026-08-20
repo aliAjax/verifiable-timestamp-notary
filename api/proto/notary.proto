@@ -1,0 +1,8 @@
+syntax = "proto3";
+package notary.v1;
+option go_package = "example.com/verifiable-timestamp-notary/api/gen/notaryv1";
+message DigestClaim { string digest = 1; string algorithm = 2; string kind = 3; string idempotency_key = 4; }
+message Proof { string id = 1; string digest = 2; string merkle_root = 3; string checkpoint_id = 4; bool valid = 5; }
+message VerifyRequest { string proof_id = 1; }
+message VerifyResponse { bool valid = 1; repeated string checks = 2; }
+service Notary { rpc Submit(DigestClaim) returns (Proof); rpc Verify(VerifyRequest) returns (VerifyResponse); }

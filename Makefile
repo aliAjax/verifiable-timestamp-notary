@@ -1,0 +1,13 @@
+GO ?= go
+.PHONY: run test verify smoke
+run:
+	$(GO) run ./cmd/notary
+test:
+	$(GO) test ./...
+verify:
+	gofmt -w .
+	$(GO) test -race ./...
+	$(GO) vet ./...
+	$(GO) build ./...
+smoke:
+	./scripts/smoke.sh

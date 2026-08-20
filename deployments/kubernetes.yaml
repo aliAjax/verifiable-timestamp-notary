@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: timestamp-notary }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: timestamp-notary } }
+  template:
+    metadata: { labels: { app: timestamp-notary } }
+    spec:
+      containers:
+        - name: notary
+          image: timestamp-notary:latest
+          ports: [{ containerPort: 8090 }]
+          readinessProbe: { httpGet: { path: /readyz, port: 8090 } }
+          livenessProbe: { httpGet: { path: /healthz, port: 8090 } }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: timestamp-notary }
+spec:
+  selector: { app: timestamp-notary }
+  ports: [{ port: 8090, targetPort: 8090 }]

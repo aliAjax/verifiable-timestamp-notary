@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS claims (id TEXT PRIMARY KEY, digest TEXT NOT NULL, algorithm TEXT NOT NULL, kind TEXT NOT NULL, policy_version TEXT NOT NULL, idempotency_key TEXT UNIQUE, status TEXT NOT NULL, version BIGINT NOT NULL, created_at TIMESTAMPTZ NOT NULL, updated_at TIMESTAMPTZ NOT NULL);
+CREATE TABLE IF NOT EXISTS proofs (id TEXT PRIMARY KEY, claim_id TEXT NOT NULL REFERENCES claims(id), merkle_root TEXT NOT NULL, checkpoint_id TEXT NOT NULL, proof_json JSONB NOT NULL, version BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS audit_events (id TEXT PRIMARY KEY, subject TEXT NOT NULL, event_type TEXT NOT NULL, previous_hash TEXT, hash TEXT NOT NULL, occurred_at TIMESTAMPTZ NOT NULL);

@@ -1,0 +1,12 @@
+server:
+  address: ":8090"
+  read_timeout: 15s
+  write_timeout: 15s
+notary:
+  quorum: 2
+  max_clock_skew: 30s
+  batch_size: 100
+  proof_ttl: 8760h
+security:
+  oidc_issuer: ${OIDC_ISSUER}
+  kms_key_ref: ${KMS_KEY_REF}

@@ -1,0 +1,11 @@
+services:
+  notary:
+    build: .
+    ports: ["8090:8090"]
+    environment:
+      NOTARY_QUORUM: "2"
+    healthcheck:
+      test: ["CMD", "/notary"]
+      interval: 30s
+      timeout: 3s
+      retries: 3

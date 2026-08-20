@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: Verifiable Timestamp Notary
+  version: 1.0.0
+paths:
+  /api/v1/timestamp-requests:
+    post:
+      summary: Submit digest timestamp request
+      responses:
+        '201': { description: Created }
+    get:
+      summary: List requests
+      responses: { '200': { description: Page } }
+  /api/v1/timestamp-requests/{id}/notarize:
+    post:
+      summary: Aggregate quorum and create proof
+      responses: { '200': { description: Proof }, '409': { description: Quorum unavailable } }
+  /api/v1/proofs/{id}/verify:
+    post:
+      summary: Verify Merkle, quorum and lifecycle checks
+      responses: { '200': { description: Verification result } }
+  /tsa:
+    post:
+      summary: RFC3161-style timestamp request
+      responses: { '200': { description: TSA response } }
+components:
+  schemas:
+    TimestampRequest:
+      type: object
+      required: [digest, algorithm, kind, idempotency_key]
